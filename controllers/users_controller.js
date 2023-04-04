@@ -1,9 +1,9 @@
 module.exports.profile = (req,res)=>{
 
-    res.send("User Profile")
+    return res.render('profile')
 
 }
 
 module.exports.posts = (req,res) =>{
-    res.send("User Posts")
+    return res.render('posts')
 }
