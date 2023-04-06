@@ -1,8 +1,15 @@
 const express = require('express');
-const port = 3000;;
+const cookieParser = require('cookie-parser')
+const port = 3000;
 const app = express();
-
+const mongoose = require('mongoose');
+const User = require("./models/user")
+const db = require("./config/mongoose")
 const expressLayouts = require('express-ejs-layouts');
+
+app.use(express.urlencoded());
+app.use(cookieParser())
+
 
 app.use(express.static("./assets"))
 
