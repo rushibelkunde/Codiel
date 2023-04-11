@@ -1,0 +1,30 @@
+#header{
+    position: sticky;
+    background-color: rgb(88, 88, 255);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    top: 0;
+
+    h1{
+        margin-left: 20px;
+    }
+    
+    ul{
+        list-style: none;
+        display: flex;
+        font-size: 20px;
+
+        li{
+            margin-left: 10px;
+        }
+
+        a{
+            color: white;
+            margin-right: 10px;
+            text-decoration: none;
+
+        }
+    }
+}

@@ -1,0 +1,20 @@
+#header {
+  position: sticky;
+  background-color: #5858ff;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 0; }
+  #header h1 {
+    margin-left: 20px; }
+  #header ul {
+    list-style: none;
+    display: flex;
+    font-size: 20px; }
+    #header ul li {
+      margin-left: 10px; }
+    #header ul a {
+      color: white;
+      margin-right: 10px;
+      text-decoration: none; }

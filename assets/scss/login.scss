@@ -1,0 +1,38 @@
+#loginPage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+    #form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+
+        input{
+            box-sizing: border-box;
+            width: 400px;
+            height: 40px;
+            margin-bottom: 10px;
+            border-radius: 20px;
+            padding-left: 30px;
+            font-size: 20px;
+        }
+        button{
+            width: 80px;
+            height: 40px;
+            background-color: blueviolet;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            font-size: 20px;
+        }
+
+        button:hover{
+            background-color: rgb(89, 29, 145);
+            cursor: pointer;
+        }
+    }
+
+}

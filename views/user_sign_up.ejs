@@ -1,9 +1,14 @@
 
-<h1>Sign-up</h1>
-<form action="/users/create" method="POST">
+<link rel="stylesheet" href="/css/signup.css">
+
+<div id="signupPage">
+    <h1>Sign-up</h1>
+<form action="/users/create" method="POST" id="form">
     <input type="text" placeholder="name" name="name" required>
     <input type="email" name="email" id="" placeholder="Email" required>
     <input type="password" name="password" id="" placeholder="Password" required>
     <input type="password" name="confirm_password" id="" placeholder="Confirm Password" required>
     <button type="submit">SignUp</button>
 </form>
+
+</div>
