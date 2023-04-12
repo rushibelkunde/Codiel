@@ -1,45 +1,58 @@
+<link rel="stylesheet" href="/css/home.css">
 
-    
 <div id="feed-posts">
-    <h4>Posts</h4>
+    <h2>For you</h2>
     <form action="/posts/createPost" id="newPostForm" method="POST">
-        <textarea name="content" id="" cols="30" rows="3" placeholder="Type here..." required></textarea>
-        <input type="submit" value="Post">
+        <input type="text" name="content" id="textarea"  placeholder="Whats happening" required>
+        <input id="postbtn" type="submit" value="Post">
     </form>
 
     <ul id="posts">
         <% posts.forEach((post)=>{%>
 
-            <li>
-                <p>
+            <li id="post">
+                
+                    <h3><%= post.user.name%></h3>
                     <%= post.content%>
-                    <br>
-                <small>
-                    -<%= post.user.name%>
-                </small>
-                <ul id="comments">
-                    <%post.comments.forEach((comment)=>{%>
+                    <hr>
+                        
+                        <ul id="comments">
+                            <%post.comments.forEach((comment)=>{%>
 
-                        <li>
-                            <%= comment.content %>
-                            <small>
-                                -<%= comment.user.name%>
-                            </small>
-                        </li>
+                                <li>
+                                    <p>
+                                        <%= comment.content %>
+                                            <small>
+                                                -<%= comment.user.name%>
+                                            </small>
 
-                    
-                    <%})%>
+                                    </p>
 
-                </ul>
+                                    <%if(locals.user && locals.user.id == comment.user.id){%>
+                                        <a href="/comments/destroy/<%= comment.id%>">delete comment</a>
                 
-                <form action="/comments/addComment" method="POST">
-                    <input name="content" type="text" placeholder="Add a comment" required>
-                    <input type="hidden" name="post" value="<%= post._id%>">
-                    <input type="submit" value=">">
-                </form>
+                                        <%}%>
 
-                </p>
+                                </li>
+
+
+                                <%})%>
+
+                        </ul>
+
+                        <form action="/comments/addComment" method="POST" >
+                            <input name="content" type="text" placeholder="Add a comment" required>
+                            <input type="hidden" name="post" value="<%= post._id%>">
+                            <input type="submit" value=">">
+                        </form>
+
+                        <%if(locals.user && locals.user.id == post.user.id){%>
+                        <a href="/posts/destroy/<%= post.id%>">delete post</a>
+
+                        <%}%>
+
                 
+
             </li>
             <%})%>
     </ul>
@@ -47,5 +60,3 @@
 
 
 </div>
-    
-    

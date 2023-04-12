@@ -8,5 +8,7 @@ const commentsController = require('../controllers/comments_controller')
 
 router.post('/addComment',commentsController.addComment)
 
+router.get('/destroy/:id',commentsController.destroy)
+
 
 module.exports = router;

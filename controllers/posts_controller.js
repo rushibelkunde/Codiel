@@ -17,4 +17,21 @@ module.exports.createPost = (req,res)=>{
 
 }
 
+module.exports.deletePost = (req,res)=>{
+    Post.findById(req.params.id)
+    .then((post)=>{
+        if(post.user== req.user.id){
+            post.deleteOne();
+
+            Comment.deleteMany({post:req.params.id})
+            .then((comments)=>{
+                res.redirect("back")
+            })
+        }
+        else{
+            res.redirect("back")
+        }
+    })
+}
+
 
