@@ -20,6 +20,8 @@ router.get('/signout',usersController.signout)
 router.post('/createSession', passport.authenticate(
     'local',
     {failureRedirect:"/users/sign-in"}
-    ),usersController.creatSession)
+    ), usersController.creatSession)
+
+
 
 module.exports = router;

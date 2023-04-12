@@ -1,5 +1,7 @@
 const User = require("../models/user")
 
+
+
 module.exports.profile = (req,res)=>{
     // console.log(req.cookies.user_id)
 
@@ -109,7 +111,11 @@ module.exports.create = (req,res)=>{
 //auth using passport js
 
 module.exports.creatSession = (req,res)=>{
-    return res.redirect('/')
+
+    if(req.isAuthenticated()){
+        return res.redirect('/')
+    }
+    return res.redirect('/users/sign-in')
 }
 
 
@@ -121,4 +127,5 @@ module.exports.signout = function(req, res, next) {
         } });
     return res.redirect('/users/sign-in')
 }
+
 

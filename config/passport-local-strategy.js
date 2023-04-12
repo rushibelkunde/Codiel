@@ -11,7 +11,7 @@ passport.use(new LocalStrategy({
     (email,password,done)=>{
         //find the user and establish the identity
 
-        User.findOne({email:email})
+        User.findOne({email:email,password:password})
         .then((user)=>{
             if(user){
                 return done(null, user)

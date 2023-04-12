@@ -1,5 +1,51 @@
 
     
-    <h1>Codiel</h1>
+<div id="feed-posts">
+    <h4>Posts</h4>
+    <form action="/posts/createPost" id="newPostForm" method="POST">
+        <textarea name="content" id="" cols="30" rows="3" placeholder="Type here..." required></textarea>
+        <input type="submit" value="Post">
+    </form>
+
+    <ul id="posts">
+        <% posts.forEach((post)=>{%>
+
+            <li>
+                <p>
+                    <%= post.content%>
+                    <br>
+                <small>
+                    -<%= post.user.name%>
+                </small>
+                <ul id="comments">
+                    <%post.comments.forEach((comment)=>{%>
+
+                        <li>
+                            <%= comment.content %>
+                            <small>
+                                -<%= comment.user.name%>
+                            </small>
+                        </li>
+
+                    
+                    <%})%>
+
+                </ul>
+                
+                <form action="/comments/addComment" method="POST">
+                    <input name="content" type="text" placeholder="Add a comment" required>
+                    <input type="hidden" name="post" value="<%= post._id%>">
+                    <input type="submit" value=">">
+                </form>
+
+                </p>
+                
+            </li>
+            <%})%>
+    </ul>
+
+
+
+</div>
     
     
