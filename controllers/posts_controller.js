@@ -2,36 +2,51 @@ const Post = require('../models/post')
 
 const Comment = require('../models/comment')
 
-module.exports.createPost = (req,res)=>{
+module.exports.createPost = async (req,res)=>{
 
-    Post.create({
+    let post = await Post.create({
         content: req.body.content,
-        user: req.user._id
+        user: req.user._id,
+        name: req.user.name
     })
-    .then((data)=>{
-            return res.redirect('/')
+
+    if(req.xhr){
+        return res.status(200).json({
+            data : {
+                post:post
+            },
+            message : "Post Created!!"
         })
-    .catch((err)=>{
-        console.log("error in creating a post", err)
-    })
+    }
+    
+    return res.redirect('back')
+
 
 }
 
-module.exports.deletePost = (req,res)=>{
-    Post.findById(req.params.id)
-    .then((post)=>{
-        if(post.user== req.user.id){
-            post.deleteOne();
-
-            Comment.deleteMany({post:req.params.id})
-            .then((comments)=>{
-                res.redirect("back")
+module.exports.deletePost = async (req,res)=>{
+    let post = await Post.findById(req.params.id)
+    
+    if(post.user == req.user.id){
+        
+        if(req.xhr){
+            return res.status(200).json({
+                data:{
+                    post_id: req.params.id,
+                    message: "Post deleted"
+                }
             })
+        }
+        post.deleteOne();
+
+        await Comment.deleteMany({post:req.params.id})
+
+        res.redirect("back")
+            
         }
         else{
             res.redirect("back")
         }
-    })
-}
+    }
 
 

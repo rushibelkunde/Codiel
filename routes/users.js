@@ -5,7 +5,7 @@ const passport = require('passport')
 const router = express.Router()
 
 const usersController = require('../controllers/users_controller')
-router.get('/profile',passport.checkAuthentication,usersController.profile)
+router.get('/profile/:id',passport.checkAuthentication,usersController.profile)
 router.get('/posts',usersController.posts)
 
 router.get('/sign-up',usersController.signup)
@@ -22,6 +22,6 @@ router.post('/createSession', passport.authenticate(
     {failureRedirect:"/users/sign-in"}
     ), usersController.creatSession)
 
-
+router.post('/update/:id',passport.checkAuthentication,usersController.update)
 
 module.exports = router;

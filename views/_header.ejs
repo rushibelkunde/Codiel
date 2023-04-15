@@ -1,11 +1,16 @@
 
 <link rel="stylesheet" href="/css/header.css">
 <header id="header">
-    <h1>Codiel</h1>
+    <a href="/"><h1>Codiel</h1></a>
 
     <ul>
         <%if(locals.user){%>
-            <li><%= user.name%></li>
+            <li>
+                <a href="/users/profile/<%=user.id%>">
+                    <%= user.name%>
+
+                </a>
+            </li>
 
             <li>
                 <a href="/users/signout">signout</a>

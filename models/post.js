@@ -11,6 +11,10 @@ const postSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+
+    name:{
+        type: String
+    },
     //include all comments in an array
     comments:[
          {

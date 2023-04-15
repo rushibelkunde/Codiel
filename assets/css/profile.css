@@ -1,2 +1,17 @@
 #profileContainer {
   background-color: aliceblue; }
+
+h2 {
+  text-align: center; }
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  form input {
+    height: 40px;
+    width: 400px;
+    border-radius: 10px;
+    margin-bottom: 5px; }
+  form button {
+    width: 100px; }

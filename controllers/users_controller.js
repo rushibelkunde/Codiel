@@ -1,5 +1,7 @@
 const User = require("../models/user")
 
+const fs = require('fs')
+const path = require('path')
 
 
 module.exports.profile = (req,res)=>{
@@ -22,11 +24,15 @@ module.exports.profile = (req,res)=>{
 
     // }
 
-    return res.render("profile",{
-        title: "codiel"
-    })
+    User.findById(req.params.id)
+    .then((profile)=>{
+        return res.render("profile",{
+            title: "codiel",
+            profile: profile
 
-    
+        })
+
+    })  
 }
 
 module.exports.posts = (req,res) =>{
@@ -112,7 +118,10 @@ module.exports.create = (req,res)=>{
 
 module.exports.creatSession = (req,res)=>{
 
+    
+
     if(req.isAuthenticated()){
+        req.flash('success','Logged In Successfully')
         return res.redirect('/')
     }
     return res.redirect('/users/sign-in')
@@ -121,11 +130,43 @@ module.exports.creatSession = (req,res)=>{
 
 
 module.exports.signout = function(req, res, next) {
+    
     req.logout(req.user, (err) => {
         if(err){
             return next(err)
         } });
+    req.flash('success','You have logged out')   
     return res.redirect('/users/sign-in')
 }
 
+module.exports.update = async (req,res)=>{
 
+    if(req.user.id==req.params.id){
+
+    let user = await User.findByIdAndUpdate(req.params.id)
+    User.uploadedAvtar(req,res, (err)=>{
+        if(err){
+            console.log("multer error",err)
+        }
+
+        user.name = req.body.name,
+        user.email = req.body.email
+
+        if(req.file){
+            if(user.avatar){
+
+                fs.unlinkSync(path.join(__dirname+'/..'+ user.avatar))
+                
+
+            }
+            user.avatar = User.avtarPath + '/' + req.file.filename
+        }
+
+        user.save()
+
+        return res.redirect('back')
+
+    })
+      
+}
+}

@@ -13,6 +13,9 @@ const commentSchema = mongoose.Schema({
     post:{
         type: mongoose.Schema.Types.ObjectId,
         ref : 'Post'
+    },
+    name:{
+        type: String
     }
 },{
     timestamps: true

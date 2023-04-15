@@ -3,48 +3,69 @@ const Post = require('../models/post')
 const Comment = require('../models/comment')
 
 
-module.exports.addComment = (req,res)=>{
+module.exports.addComment = async (req,res)=>{
 
-    Post.findById(req.body.post)
-    .then((post)=>{
-        if(post){
-            Comment.create({
+    let post = await Post.findById(req.body.post)
+    if(post){
+
+        let comment = await Comment.create({
                 content: req.body.content,
                 user: req.user._id,
-                post : req.body.post
+                post : req.body.post,
+                name: req.user.name
             })
-            .then((comment)=>{
-                post.comments.push(comment)
-                post.save()
-            })
+            
+            post.comments.push(comment)
+            post.save()
+
+            if(req.xhr){
+                return res.status(200).json({
+                    data: {
+                        comment : comment
+                    },
+                    message: "comment added"
+
+                })
+            }
+            
             return res.redirect("/")
         }
 
         return res.redirect("/")
-    })
-    .catch((err)=>{
-        console.log("error in finding the post", err)
-    })
+    }
+    
  
-}
 
-module.exports.destroy = (req,res)=>{
 
-    Comment.findById(req.params.id)
-    .then((comment)=>{
-        if(comment.user == req.user.id){
-            let postId = comment.post
-            comment.deleteOne()
+module.exports.destroy = async (req,res)=>{
 
-            Post.findByIdAndUpdate(postId , { $pull : {comments:req.params.id}})
-            .then((data)=>{
 
+    let comment = await Comment.findById(req.params.id)
+    
+    
+    if(comment.user == req.user.id){
+        
+        let postId = comment.post
+        comment.deleteOne()
+
+        let post = await Post.findByIdAndUpdate(postId , { $pull : {comments:req.params.id}})
+        post.save()
+
+        if(req.xhr){
+            return res.status(200).json({
+                data: {
+                    comment_id: req.params.id,
+                    message: "comment Deleted"
+                }   
             })
-            
         }
 
         return res.redirect("back")
 
-    })
+           
+    }
 
-}
+        return res.redirect("back")
+
+    }
+
